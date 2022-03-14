@@ -1,0 +1,25 @@
+% MATLAB PROGRAM TO GENERATE PWM & RECONSTRUCT MESSAGE SIGNAL
+clc;
+clear all;
+close all;
+fc=300;
+fs=2000;
+fm=200;
+t=0:1/fs:((2/fm)-(1/fs));
+m_t=0.4*cos(2*pi*fm*t)+0.5;
+subplot(3,1,1);
+plot(m_t);
+xlabel('-->time');
+ylabel('--->amplitude');
+title('message signal');
+axis([0 50 0 1]);
+MODULATED_SIGNAL=modulate(m_t,fc,fs,'pwm');
+subplot(3,1,2);
+plot(MODULATED_SIGNAL);
+axis([0 500 -0.2 1.2]);
+title('PWM signal');
+RECONSTRUCTED_SIGNAL=demod(MODULATED_SIGNAL,fc,fs,'pwm');
+subplot(3,1,3);
+plot(RECONSTRUCTED_SIGNAL);
+title('demodulated signal from PWM');
+axis([0 50 0 1 ]);
